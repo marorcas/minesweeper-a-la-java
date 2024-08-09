@@ -3,7 +3,7 @@ package minesweeper;
 public class Main {
 
     public static void main(String[] args) {
-        Grid grid = new Grid(10, 10, 10);
+        MinesweeperGame game = new MinesweeperGame(10, 10, 10);
 
         System.out.println();
         System.out.println("   =============== Play Minesweeper! ===============   ");
@@ -19,6 +19,7 @@ public class Main {
         System.out.println("   Have fun :)");
         System.out.println();
 
-        grid.getGrid();
+        game.getGameGrid();
+        // game.getBombGrid();
     }
 }

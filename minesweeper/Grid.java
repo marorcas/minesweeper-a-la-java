@@ -1,53 +1,49 @@
 package minesweeper;
 
-import java.util.Arrays;
-
 public class Grid {
+    private Cell[][] grid;
     private int cols;
     private int rows;
-    private int minecount;
-    private Character[][] minesArray;
-    private Character[][] gameArray;
 
-    public Grid(int cols, int rows, int minecount) {
-        this.cols = cols;
-        this.rows = rows;
-        this.minecount = minecount;
-        this.minesArray = new Character[cols][rows];
-        this.populateMinesArray();
-        this.gameArray = new Character[cols][rows];
-        this.populateGameArray();
+    public Grid() {
+        this.cols = 10;
+        this.rows = 10;
+        this.grid = new Cell[this.cols][this.rows];
+        this.initializeGrid();
     }
 
-    public void populateMinesArray() {
-        // fill 2-D array with zeros
-        for (int i = 0; i < cols; i++) {
-            Arrays.fill(this.minesArray[i], '-');
-        }
+    public Grid(int cols, int rows) {
+        this.cols = cols;
+        this.rows = rows;
+        this.grid = new Cell[cols][rows];
+        this.initializeGrid();
+    }
 
-        // generate random indexes for bomb placements
-        // have to make sure generated placements are not repeated
-        // 'x' represents a bomb
-        int count = 0;
-        while (count < this.minecount) {
-            int randomCol = (int) (Math.random() * (cols));
-            int randomRow = (int) (Math.random() * (rows));
-            if (this.minesArray[randomCol][randomRow] != 'x') {
-                this.minesArray[randomCol][randomRow] = 'x';
-                count++;
+    public void initializeGrid() {
+        for (int i = 0; i < this.cols; i++) {
+            for (int j = 0; j < this.rows; j++) {
+                this.grid[i][j] = new Cell(i, j);
             }
         }
     }
 
-    public void populateGameArray() {
-        for (int i = 0; i < cols; i++) {
-            Arrays.fill(this.gameArray[i], ' ');
-        }
+    // getter functions
+    public int getCols() {
+        return this.cols;
     }
 
-    public void getGrid() {
+    public int getRows() {
+        return this.rows;
+    }
+
+    public Cell[][] getGrid() {
+        return this.grid;
+    }
+
+    public void displayGrid() {
         System.out.println();
 
+        // to print column coordinates
         for (int i = 0; i < this.cols; i++) {
             if (i == 0) {
                 System.out.print("   ");
@@ -59,10 +55,10 @@ public class Grid {
 
         for (int i = 0; i < this.cols; i++) {
             for (int j = 0; j < this.rows; j++) {
-                if (j == 0) {
+                if (j == 0) { // to print row coordinates
                     System.out.print(" " + i + " ");
                 }
-                System.out.print("[ " + this.gameArray[i][j] + " ]");
+                System.out.print("[ " + this.grid[i][j].getValueAsChar() + " ]");
             }
             System.out.println("\n");
         }
