@@ -43,9 +43,11 @@ public class MinesweeperGame {
         System.out.println();
         System.out.println("   Have fun :)");
         System.out.println();
+        System.out.println("Start playing!");
+        this.getGameGrid();
     }
 
-    public void getGameGrid() {
+    private void getGameGrid() {
         this.gameGrid.displayGrid();
     }
 
@@ -63,6 +65,13 @@ public class MinesweeperGame {
 
     private void setGameEndStatus() {
         this.gameEndStatus = true;
+    }
+
+    private boolean checkIfWon() {
+        // returns true if no elements match -2
+        return Arrays.stream(this.gameGrid.getGrid())
+                .flatMap(Arrays::stream)
+                .noneMatch(cell -> cell.getValue() == -2);
     }
 
     public void getCellValue(int row, int col) {
@@ -125,6 +134,12 @@ public class MinesweeperGame {
             }
 
             this.gameGrid.getGrid()[row][col].setValue(cellValue);
+
+            if (checkIfWon() == true) {
+                this.setGameEndStatus();
+                System.out.println("   ===============      YOU WON!       ===============   ");
+            }
+
             this.getGameGrid();
         }
     }

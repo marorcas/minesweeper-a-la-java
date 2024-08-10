@@ -11,9 +11,6 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Start playing!");
-        game.getGameGrid();
-
         while (game.getGameEndStatus() == false) {
             System.out.println("Enter a row number: ");
             int rowCord = scanner.nextInt();
@@ -22,11 +19,7 @@ public class Main {
             int colCord = scanner.nextInt();
 
             game.getCellValue(rowCord, colCord);
-
-            // game.getGameGrid();
         }
-
-        game.getGameGrid();
 
         scanner.close();
     }
