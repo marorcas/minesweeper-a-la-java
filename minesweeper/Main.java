@@ -5,11 +5,12 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
         MinesweeperGame game = new MinesweeperGame(10, 10, 10);
 
         game.getGameInstructions();
-
-        Scanner scanner = new Scanner(System.in);
 
         while (game.getGameEndStatus() == false) {
             System.out.println("Enter a row number: ");
