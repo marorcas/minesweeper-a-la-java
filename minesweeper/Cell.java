@@ -24,11 +24,6 @@ public class Cell {
         return this.value;
     }
 
-    // setter functions
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     public char getValueAsChar() {
         if (this.getValue() == -2) {
             return ' ';
@@ -36,5 +31,10 @@ public class Cell {
 
         // turn int value into a char
         return (char) (this.getValue() + '0');
+    }
+
+    // setter functions
+    public void setValue(int value) {
+        this.value = value;
     }
 }

@@ -19,7 +19,7 @@ public class Grid {
         this.initializeGrid();
     }
 
-    public void initializeGrid() {
+    private void initializeGrid() {
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 this.grid[i][j] = new Cell(i, j);

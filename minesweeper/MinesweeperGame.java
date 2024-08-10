@@ -22,18 +22,34 @@ public class MinesweeperGame {
         while (count < this.minecount) {
             int randomRow = (int) (Math.random() * (this.gameGrid.getRows()));
             int randomCol = (int) (Math.random() * (this.gameGrid.getCols()));
-            if (this.gameGrid.getGrid()[randomRow][randomCol].getValue() != -1) {
+            if (this.gameGrid.getCell(randomRow, randomCol).getValue() != -1) {
                 this.gameGrid.getGrid()[randomRow][randomCol] = new BombCell(randomRow, randomCol);
                 count++;
             }
         }
     }
 
+    public void getGameInstructions() {
+        System.out.println();
+        System.out.println("   =============== Play Minesweeper! ===============   ");
+        System.out.println();
+
+        System.out.println("   How to play:");
+        System.out.println("   1. Enter a row number");
+        System.out.println("   2. Enter a column number");
+        System.out.println(
+                "   3. If a number appears in the box of your chosen coordinates, this indicates how many mines surround that box");
+        System.out.println("   4. If you click on a mine, it's game over!");
+        System.out.println();
+        System.out.println("   Have fun :)");
+        System.out.println();
+    }
+
     public void getGameGrid() {
         this.gameGrid.displayGrid();
     }
 
-    public void addBombsToGameGrid() {
+    private void addBombsToGameGrid() {
         Arrays.stream(this.gameGrid.getGrid())
                 .flatMap(Arrays::stream)
                 .filter(cell -> cell instanceof BombCell)
@@ -46,7 +62,6 @@ public class MinesweeperGame {
     }
 
     private void setGameEndStatus() {
-        this.addBombsToGameGrid();
         this.gameEndStatus = true;
     }
 
@@ -62,9 +77,12 @@ public class MinesweeperGame {
         } else if (row == 0) {
             rowIdxStart = row;
             rowIdxEnd = row + 1;
-        } else { // if row is the last row in the grid
+        } else if (row == this.gameGrid.getRows() - 1) { // if row is the last row in the grid
             rowIdxStart = row - 1;
             rowIdxEnd = row;
+        } else { // Out of bounds coordinate
+            System.out.println(" !!! Invalid coordinate. Please enter a valid number !!! ");
+            return;
         }
 
         if (col > 0 && col < this.gameGrid.getCols() - 1) {
@@ -73,18 +91,26 @@ public class MinesweeperGame {
         } else if (col == 0) {
             colIdxStart = col;
             colIdxEnd = col + 1;
-        } else { // if col is the last column in the grid
+        } else if (col == this.gameGrid.getCols() - 1) { // if col is the last column in the grid
             colIdxStart = col - 1;
             colIdxEnd = col;
+        } else { // Out of bounds coordinate
+            System.out.println(" !!! Invalid coordinate. Please enter a valid number !!! ");
+            return;
         }
 
         int cellValue = 0;
 
-        if (this.gameGrid.getGrid()[row][col].getValue() == -1) {
+        if (this.gameGrid.getCell(row, col).getValue() == -1) {
             // put all bombs in grid
-            System.out.println("BOOM!");
-            System.out.println("You lost. Better luck next time :(");
+            System.out.println("   ===============       BOOM!       ===============   ");
+            System.out.println("Game over :(");
             this.setGameEndStatus();
+            this.addBombsToGameGrid();
+            return;
+        } else if (this.gameGrid.getCell(row, col).getValue() != -2) {
+            System.out.println(
+                    " !!! You already selected this cell. Please enter different coordinates. !!! ");
             return;
         } else {
             for (int i = rowIdxStart; i < rowIdxEnd + 1; i++) {
@@ -93,13 +119,13 @@ public class MinesweeperGame {
                             && this.gameGrid.getCell(row, col).getYCord() == col) {
                         if (this.gameGrid.getGrid()[i][j].getValue() == -1) {
                             cellValue++;
-                            System.out.println(cellValue);
                         }
                     }
                 }
             }
 
             this.gameGrid.getGrid()[row][col].setValue(cellValue);
+            this.getGameGrid();
         }
     }
 }
