@@ -2,42 +2,46 @@ package minesweeper;
 
 public class Grid {
     private Cell[][] grid;
-    private int cols;
     private int rows;
+    private int cols;
 
     public Grid() {
-        this.cols = 10;
         this.rows = 10;
-        this.grid = new Cell[this.cols][this.rows];
+        this.cols = 10;
+        this.grid = new Cell[this.rows][this.cols];
         this.initializeGrid();
     }
 
-    public Grid(int cols, int rows) {
-        this.cols = cols;
+    public Grid(int rows, int cols) {
         this.rows = rows;
-        this.grid = new Cell[cols][rows];
+        this.cols = cols;
+        this.grid = new Cell[rows][cols];
         this.initializeGrid();
     }
 
     public void initializeGrid() {
-        for (int i = 0; i < this.cols; i++) {
-            for (int j = 0; j < this.rows; j++) {
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
                 this.grid[i][j] = new Cell(i, j);
             }
         }
     }
 
     // getter functions
-    public int getCols() {
-        return this.cols;
-    }
-
     public int getRows() {
         return this.rows;
     }
 
+    public int getCols() {
+        return this.cols;
+    }
+
     public Cell[][] getGrid() {
         return this.grid;
+    }
+
+    public Cell getCell(int row, int col) {
+        return this.grid[row][col];
     }
 
     public void displayGrid() {
@@ -53,8 +57,8 @@ public class Grid {
 
         System.out.println();
 
-        for (int i = 0; i < this.cols; i++) {
-            for (int j = 0; j < this.rows; j++) {
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
                 if (j == 0) { // to print row coordinates
                     System.out.print(" " + i + " ");
                 }

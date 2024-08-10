@@ -8,7 +8,7 @@ public class Cell {
     public Cell(int x_cord, int y_cord) {
         this.x_cord = x_cord;
         this.y_cord = y_cord;
-        this.value = -2;
+        this.value = -2; // -2 represents an empty cell
     }
 
     // getter functions
