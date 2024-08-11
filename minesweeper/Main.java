@@ -8,18 +8,18 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        MinesweeperGame game = new MinesweeperGame(10, 10, 10);
+        MinesweeperGame game = new MinesweeperGame();
 
         game.getGameInstructions();
 
         while (game.getGameEndStatus() == false) {
             System.out.println("Enter a row number: ");
-            int rowCord = scanner.nextInt();
+            int row = scanner.nextInt();
 
             System.out.println("Enter a column number: ");
-            int colCord = scanner.nextInt();
+            int col = scanner.nextInt();
 
-            game.getCellValue(rowCord, colCord);
+            game.getCellValue(row, col);
         }
 
         scanner.close();

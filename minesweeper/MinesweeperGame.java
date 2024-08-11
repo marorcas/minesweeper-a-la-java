@@ -7,13 +7,37 @@ public class MinesweeperGame {
     private Grid gameGrid;
     private boolean gameEndStatus;
 
-    public MinesweeperGame(int rows, int cols, int minecount) {
-        this.minecount = minecount;
-        this.gameGrid = new Grid(rows, cols);
+    // === constructors ===
+    // default values if none are entered
+    public MinesweeperGame() {
+        this.minecount = 10;
+        this.gameGrid = new Grid(); // 10x10
         this.placeBombs();
         this.gameEndStatus = false;
     }
 
+    public MinesweeperGame(Grid grid, int minecount) {
+        this.minecount = minecount;
+        this.gameGrid = grid;
+        this.placeBombs();
+        this.gameEndStatus = false;
+    }
+
+    // === getter functions ===
+    private void getGameGrid() {
+        this.gameGrid.displayGrid();
+    }
+
+    public boolean getGameEndStatus() {
+        return this.gameEndStatus;
+    }
+
+    // === setter functions ===
+    private void setGameEndStatus() {
+        this.gameEndStatus = true;
+    }
+
+    // === private functions ===
     private void placeBombs() {
         // generate random indexes for bomb placements
         // have to make sure generated placements are not repeated
@@ -29,6 +53,22 @@ public class MinesweeperGame {
         }
     }
 
+    private void displayBombs() {
+        Arrays.stream(this.gameGrid.getGrid())
+                .flatMap(Arrays::stream)
+                .filter(cell -> cell instanceof BombCell)
+                .map(cell -> (BombCell) cell)
+                .forEach(bomb -> bomb.detonateBomb());
+    }
+
+    private boolean checkIfWon() {
+        // returns true if no elements match -2
+        return Arrays.stream(this.gameGrid.getGrid())
+                .flatMap(Arrays::stream)
+                .noneMatch(cell -> cell.getValue() == -2);
+    }
+
+    // === public functions ===
     public void getGameInstructions() {
         System.out.println();
         System.out.println("   =============== Play Minesweeper! ===============   ");
@@ -45,33 +85,6 @@ public class MinesweeperGame {
         System.out.println();
         System.out.println("Start playing!");
         this.getGameGrid();
-    }
-
-    private void getGameGrid() {
-        this.gameGrid.displayGrid();
-    }
-
-    private void addBombsToGameGrid() {
-        Arrays.stream(this.gameGrid.getGrid())
-                .flatMap(Arrays::stream)
-                .filter(cell -> cell instanceof BombCell)
-                .map(cell -> (BombCell) cell)
-                .forEach(bomb -> bomb.detonateBomb());
-    }
-
-    public boolean getGameEndStatus() {
-        return this.gameEndStatus;
-    }
-
-    private void setGameEndStatus() {
-        this.gameEndStatus = true;
-    }
-
-    private boolean checkIfWon() {
-        // returns true if no elements match -2
-        return Arrays.stream(this.gameGrid.getGrid())
-                .flatMap(Arrays::stream)
-                .noneMatch(cell -> cell.getValue() == -2);
     }
 
     public void getCellValue(int row, int col) {
@@ -115,7 +128,7 @@ public class MinesweeperGame {
             System.out.println("   ===============       BOOM!       ===============   ");
             System.out.println("Game over :(");
             this.setGameEndStatus();
-            this.addBombsToGameGrid();
+            this.displayBombs();
             this.getGameGrid();
             return;
         } else if (this.gameGrid.getCell(row, col).getValue() != -2) {

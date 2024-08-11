@@ -4,14 +4,17 @@ public class Cell {
     private int x_cord;
     private int y_cord;
     private int value;
+    private boolean isSelected;
 
+    // === constructor ===
     public Cell(int x_cord, int y_cord) {
         this.x_cord = x_cord;
         this.y_cord = y_cord;
         this.value = -2; // -2 represents an empty cell
+        this.isSelected = false;
     }
 
-    // getter functions
+    // === getter functions ===
     public int getXCord() {
         return this.x_cord;
     }
@@ -33,8 +36,16 @@ public class Cell {
         return (char) (this.getValue() + '0');
     }
 
-    // setter functions
+    public boolean getIsSelected() {
+        return this.isSelected;
+    }
+
+    // === setter functions ===
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public void setIsSelected(boolean selectedState) {
+        this.isSelected = selectedState;
     }
 }

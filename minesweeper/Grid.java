@@ -5,6 +5,8 @@ public class Grid {
     private int rows;
     private int cols;
 
+    // === constructors ===
+    // default values if none entered
     public Grid() {
         this.rows = 10;
         this.cols = 10;
@@ -19,15 +21,7 @@ public class Grid {
         this.initializeGrid();
     }
 
-    private void initializeGrid() {
-        for (int i = 0; i < this.rows; i++) {
-            for (int j = 0; j < this.cols; j++) {
-                this.grid[i][j] = new Cell(i, j);
-            }
-        }
-    }
-
-    // getter functions
+    // === getter functions ===
     public int getRows() {
         return this.rows;
     }
@@ -44,6 +38,16 @@ public class Grid {
         return this.grid[row][col];
     }
 
+    // === private functions ===
+    private void initializeGrid() {
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                this.grid[i][j] = new Cell(i, j);
+            }
+        }
+    }
+
+    // === public functions ===
     public void displayGrid() {
         System.out.println();
 
