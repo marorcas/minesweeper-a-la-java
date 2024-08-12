@@ -66,6 +66,7 @@ public class Grid {
                 if (j == 0) { // to print row coordinates
                     System.out.print(" " + i + " ");
                 }
+
                 System.out.print("[ " + this.grid[i][j].getValueAsChar() + " ]");
             }
             System.out.println("\n");

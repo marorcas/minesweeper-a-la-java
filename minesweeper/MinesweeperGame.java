@@ -13,6 +13,7 @@ public class MinesweeperGame {
         this.minecount = 10;
         this.gameGrid = new Grid(); // 10x10
         this.placeBombs();
+        this.enterCellValues();
         this.gameEndStatus = false;
     }
 
@@ -53,6 +54,61 @@ public class MinesweeperGame {
         }
     }
 
+    private int calculateCellValue(int row, int col) {
+        int rowIdxStart;
+        int rowIdxEnd;
+        int colIdxStart;
+        int colIdxEnd;
+
+        if (row == 0) {
+            rowIdxStart = row;
+            rowIdxEnd = row + 1;
+        } else if (row == this.gameGrid.getRows() - 1) { // if row is the last row in the grid
+            rowIdxStart = row - 1;
+            rowIdxEnd = row;
+        } else {
+            rowIdxStart = row - 1;
+            rowIdxEnd = row + 1;
+        }
+
+        if (col == 0) {
+            colIdxStart = col;
+            colIdxEnd = col + 1;
+        } else if (col == this.gameGrid.getCols() - 1) { // if col is the last column in the grid
+            colIdxStart = col - 1;
+            colIdxEnd = col;
+        } else {
+            colIdxStart = col - 1;
+            colIdxEnd = col + 1;
+        }
+
+        int cellValue = 0;
+
+        for (int i = rowIdxStart; i < rowIdxEnd + 1; i++) {
+            for (int j = colIdxStart; j < colIdxEnd + 1; j++) {
+                if (this.gameGrid.getCell(row, col).getXCord() == row
+                        && this.gameGrid.getCell(row, col).getYCord() == col) {
+                    if (this.gameGrid.getGrid()[i][j].getValue() == -1) {
+                        cellValue++;
+                    }
+                }
+            }
+        }
+
+        return cellValue;
+    }
+
+    private void enterCellValues() {
+        Arrays.stream(this.gameGrid.getGrid())
+                .flatMap(Arrays::stream)
+                .filter(cell -> !(cell instanceof BombCell))
+                .map(cell -> (Cell) cell)
+                .forEach(cell -> {
+                    cell.setValue(calculateCellValue(cell.getXCord(), cell.getYCord()));
+                });
+        ;
+    }
+
     private void displayBombs() {
         Arrays.stream(this.gameGrid.getGrid())
                 .flatMap(Arrays::stream)
@@ -62,10 +118,14 @@ public class MinesweeperGame {
     }
 
     private boolean checkIfWon() {
-        // returns true if no elements match -2
-        return Arrays.stream(this.gameGrid.getGrid())
+        // returns true if all cells have been revealed
+        boolean win = Arrays.stream(this.gameGrid.getGrid())
                 .flatMap(Arrays::stream)
-                .noneMatch(cell -> cell.getValue() == -2);
+                .noneMatch(cell -> cell.getIsRevealed() == false);
+
+        System.out.println("Did you win? " + win);
+
+        return win;
     }
 
     // === public functions ===
@@ -87,42 +147,16 @@ public class MinesweeperGame {
         this.getGameGrid();
     }
 
-    public void getCellValue(int row, int col) {
-        int rowIdxStart;
-        int rowIdxEnd;
-        int colIdxStart;
-        int colIdxEnd;
-
-        if (row > 0 && row < this.gameGrid.getRows() - 1) {
-            rowIdxStart = row - 1;
-            rowIdxEnd = row + 1;
-        } else if (row == 0) {
-            rowIdxStart = row;
-            rowIdxEnd = row + 1;
-        } else if (row == this.gameGrid.getRows() - 1) { // if row is the last row in the grid
-            rowIdxStart = row - 1;
-            rowIdxEnd = row;
-        } else { // Out of bounds coordinate
+    public boolean checkCoordinateValidity(int number) {
+        if (number < 0 || number >= this.gameGrid.getGrid().length) {
             System.out.println(" !!! Invalid coordinate. Please enter a valid number !!! ");
-            return;
+            return false;
         }
 
-        if (col > 0 && col < this.gameGrid.getCols() - 1) {
-            colIdxStart = col - 1;
-            colIdxEnd = col + 1;
-        } else if (col == 0) {
-            colIdxStart = col;
-            colIdxEnd = col + 1;
-        } else if (col == this.gameGrid.getCols() - 1) { // if col is the last column in the grid
-            colIdxStart = col - 1;
-            colIdxEnd = col;
-        } else { // Out of bounds coordinate
-            System.out.println(" !!! Invalid coordinate. Please enter a valid number !!! ");
-            return;
-        }
+        return true;
+    }
 
-        int cellValue = 0;
-
+    public void revealCellValue(int row, int col) {
         if (this.gameGrid.getCell(row, col).getValue() == -1) {
             // put all bombs in grid
             System.out.println("   ===============       BOOM!       ===============   ");
@@ -131,30 +165,19 @@ public class MinesweeperGame {
             this.displayBombs();
             this.getGameGrid();
             return;
-        } else if (this.gameGrid.getCell(row, col).getValue() != -2) {
+        } else if (this.gameGrid.getCell(row, col).getIsRevealed() == true) {
             System.out.println(
                     " !!! You already selected this cell. Please enter different coordinates. !!! ");
             return;
         } else {
-            for (int i = rowIdxStart; i < rowIdxEnd + 1; i++) {
-                for (int j = colIdxStart; j < colIdxEnd + 1; j++) {
-                    if (this.gameGrid.getCell(row, col).getXCord() == row
-                            && this.gameGrid.getCell(row, col).getYCord() == col) {
-                        if (this.gameGrid.getGrid()[i][j].getValue() == -1) {
-                            cellValue++;
-                        }
-                    }
-                }
-            }
-
-            this.gameGrid.getGrid()[row][col].setValue(cellValue);
+            this.gameGrid.getCell(row, col).setIsRevealedToTrue();
 
             if (checkIfWon() == true) {
                 this.setGameEndStatus();
                 System.out.println("   ===============      YOU WON!       ===============   ");
             }
-
-            this.getGameGrid();
         }
+
+        this.getGameGrid();
     }
 }

@@ -16,10 +16,18 @@ public class Main {
             System.out.println("Enter a row number: ");
             int row = scanner.nextInt();
 
+            if (!game.checkCoordinateValidity(row)) {
+                continue;
+            }
+
             System.out.println("Enter a column number: ");
             int col = scanner.nextInt();
 
-            game.getCellValue(row, col);
+            if (!game.checkCoordinateValidity(col)) {
+                continue;
+            }
+
+            game.revealCellValue(row, col);
         }
 
         scanner.close();
