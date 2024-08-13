@@ -47,7 +47,8 @@ public class MinesweeperGame {
         while (count < this.minecount) {
             int randomRow = (int) (Math.random() * (this.gameGrid.getRows()));
             int randomCol = (int) (Math.random() * (this.gameGrid.getCols()));
-            if (this.gameGrid.getCell(randomRow, randomCol).getValue() != -1) {
+
+            if (this.gameGrid.getGrid()[randomRow][randomCol].getValue() != -1) {
                 this.gameGrid.getGrid()[randomRow][randomCol] = new BombCell(randomRow, randomCol);
                 count++;
             }
@@ -107,6 +108,45 @@ public class MinesweeperGame {
                     cell.setValue(calculateCellValue(cell.getXCord(), cell.getYCord()));
                 });
         ;
+    }
+
+    private void revealAdjacentCells(int col, int row) {
+        int rowIdxStart;
+        int rowIdxEnd;
+        int colIdxStart;
+        int colIdxEnd;
+
+        if (row == 0) {
+            rowIdxStart = row;
+            rowIdxEnd = row + 1;
+        } else if (row == this.gameGrid.getRows() - 1) { // if row is the last row in the grid
+            rowIdxStart = row - 1;
+            rowIdxEnd = row;
+        } else {
+            rowIdxStart = row - 1;
+            rowIdxEnd = row + 1;
+        }
+
+        if (col == 0) {
+            colIdxStart = col;
+            colIdxEnd = col + 1;
+        } else if (col == this.gameGrid.getCols() - 1) { // if col is the last column in the grid
+            colIdxStart = col - 1;
+            colIdxEnd = col;
+        } else {
+            colIdxStart = col - 1;
+            colIdxEnd = col + 1;
+        }
+
+        for (int i = rowIdxStart; i < rowIdxEnd + 1; i++) {
+            for (int j = colIdxStart; j < colIdxEnd + 1; j++) {
+                this.gameGrid.getGrid()[i][j].setIsRevealedToTrue();
+
+                if (this.gameGrid.getGrid()[i][j].getValue() == 0) {
+                    revealAdjacentCells(row, col);
+                }
+            }
+        }
     }
 
     private void displayBombs() {
@@ -171,6 +211,9 @@ public class MinesweeperGame {
             return;
         } else {
             this.gameGrid.getCell(row, col).setIsRevealedToTrue();
+            if (this.gameGrid.getCell(row, col).getValue() == 0) {
+                this.revealAdjacentCells(row, col);
+            }
 
             if (checkIfWon() == true) {
                 this.setGameEndStatus();
