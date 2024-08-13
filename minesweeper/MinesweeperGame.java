@@ -116,7 +116,6 @@ public class MinesweeperGame {
             System.out.println("Game over :(");
             this.setGameEndStatus();
             this.addBombsToGameGrid();
-            this.getGameGrid();
             return;
         } else if (this.gameGrid.getCell(row, col).getValue() != -2) {
             System.out.println(
