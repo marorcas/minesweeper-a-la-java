@@ -5,6 +5,8 @@ public class Grid {
     private int rows;
     private int cols;
 
+    // --- constructors ---
+    // default grid
     public Grid() {
         this.rows = 10;
         this.cols = 10;
@@ -12,6 +14,7 @@ public class Grid {
         this.initializeGrid();
     }
 
+    // customised grid
     public Grid(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
@@ -27,7 +30,7 @@ public class Grid {
         }
     }
 
-    // getter functions
+    // --- getter functions ---
     public int getRows() {
         return this.rows;
     }
@@ -44,6 +47,7 @@ public class Grid {
         return this.grid[row][col];
     }
 
+    // --- public functions ---
     public void displayGrid() {
         System.out.println();
 

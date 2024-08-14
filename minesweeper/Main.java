@@ -13,12 +13,20 @@ public class Main {
 
         while (game.getGameEndStatus() == false) {
             System.out.println("Enter a row number: ");
-            int rowCord = scanner.nextInt();
+            int row = scanner.nextInt();
+
+            if (!game.checkCoordinateValidity(row)) {
+                continue;
+            }
 
             System.out.println("Enter a column number: ");
-            int colCord = scanner.nextInt();
+            int col = scanner.nextInt();
 
-            game.getCellValue(rowCord, colCord);
+            if (!game.checkCoordinateValidity(col)) {
+                continue;
+            }
+
+            game.getCellValue(row, col);
         }
 
         scanner.close();

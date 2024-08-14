@@ -5,13 +5,14 @@ public class Cell {
     private int y_cord;
     private int value;
 
+    // --- constructor ---
     public Cell(int x_cord, int y_cord) {
         this.x_cord = x_cord;
         this.y_cord = y_cord;
         this.value = -2; // -2 represents an empty cell
     }
 
-    // getter functions
+    // --- getter functions ---
     public int getXCord() {
         return this.x_cord;
     }
@@ -33,7 +34,7 @@ public class Cell {
         return (char) (this.getValue() + '0');
     }
 
-    // setter functions
+    // --- setter functions ---
     public void setValue(int value) {
         this.value = value;
     }
