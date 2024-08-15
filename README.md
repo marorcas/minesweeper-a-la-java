@@ -37,3 +37,4 @@ Planned future features and improvements:
 
 - 2024-08-10: Fully working basic game, no cascading when a cell with value zero is revealed
 - 2024-08-13: Double-checked on code and it was not working as intended. I think I had accidentally pushed changes from my 'cascade' branch into the main branch. Had to revert it back to a point where I knew it was still working and make some minor fixes. Woops.
+- 2024-08-15: Added error handling for wrong input type.
