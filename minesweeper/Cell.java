@@ -6,7 +6,7 @@ public class Cell {
     private int value;
     private boolean isRevealed;
 
-    // === constructor ===
+    // --- constructor ---
     public Cell(int x_cord, int y_cord) {
         this.x_cord = x_cord;
         this.y_cord = y_cord;
@@ -14,7 +14,7 @@ public class Cell {
         this.isRevealed = false;
     }
 
-    // === getter functions ===
+    // --- getter functions ---
     public int getXCord() {
         return this.x_cord;
     }
@@ -40,7 +40,7 @@ public class Cell {
         return (char) (this.getValue() + '0');
     }
 
-    // === setter functions ===
+    // --- setter functions ---
     public void setValue(int value) {
         this.value = value;
     }

@@ -3,14 +3,14 @@ package minesweeper;
 public class BombCell extends Cell {
     private boolean isDetonated;
 
-    // === constructor ===
+    // --- constructor ---
     public BombCell(int x_cord, int y_cord) {
         super(x_cord, y_cord);
         this.setValue(-1); // -1 represents a bomb
         this.isDetonated = false;
     }
 
-    // === getter functions ===
+    // --- getter functions ---
     @Override
     public char getValueAsChar() {
         // don't display the bomb while it's not detonated
@@ -21,8 +21,8 @@ public class BombCell extends Cell {
         return 'X';
     }
 
-    // // === public functions ===
+    // --- setter functions ---
     public void detonateBomb() {
-        this.isDetonated = true;
+        this.detonateBomb = true;
     }
 }
