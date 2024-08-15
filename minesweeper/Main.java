@@ -1,28 +1,44 @@
 package minesweeper;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        MinesweeperGame game = new MinesweeperGame(10, 10, 10);
+        MinesweeperGame game = new MinesweeperGame();
 
         game.getGameInstructions();
 
         Scanner scanner = new Scanner(System.in);
 
         while (game.getGameEndStatus() == false) {
-            System.out.println("Enter a row number: ");
-            int row = scanner.nextInt();
+            int row;
+            int col;
 
-            if (!game.checkCoordinateValidity(row)) {
+            try {
+                System.out.println("Enter a row number: ");
+                row = scanner.nextInt();
+
+                if (!game.checkCoordinateValidity(row)) {
+                    continue;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a numerical value.");
+                scanner.next();
                 continue;
             }
 
-            System.out.println("Enter a column number: ");
-            int col = scanner.nextInt();
+            try {
+                System.out.println("Enter a column number: ");
+                col = scanner.nextInt();
 
-            if (!game.checkCoordinateValidity(col)) {
+                if (!game.checkCoordinateValidity(col)) {
+                    continue;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a numerical value.");
+                scanner.next();
                 continue;
             }
 
