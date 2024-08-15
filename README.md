@@ -37,4 +37,4 @@ Planned future features and improvements:
 
 - 2024-08-10: Fully working basic game, no cascading when a cell with value zero is revealed
 - 2024-08-13: Double-checked on code and it was not working as intended. I think I had accidentally pushed changes from my 'cascade' branch into the main branch. Had to revert it back to a point where I knew it was still working and make some minor fixes. Woops.
-- 2024-08-15: Added error handling for wrong input type.
+- 2024-08-15: I was playing with my minesweeper and accidentally pressed a letter key, which made my game crash. Had forgotten to handle inputs of the wrong type so I added some error handling for this.
