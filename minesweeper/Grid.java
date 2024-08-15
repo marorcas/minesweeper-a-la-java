@@ -1,7 +1,7 @@
 package minesweeper;
 
 public class Grid {
-    private Cell[][] grid;
+    private Cell[][] gridArray;
     private int rows;
     private int cols;
 
@@ -10,7 +10,7 @@ public class Grid {
     public Grid() {
         this.rows = 10;
         this.cols = 10;
-        this.grid = new Cell[this.rows][this.cols];
+        this.gridArray = new Cell[this.rows][this.cols];
         this.initializeGrid();
     }
 
@@ -18,14 +18,14 @@ public class Grid {
     public Grid(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
-        this.grid = new Cell[rows][cols];
+        this.gridArray = new Cell[rows][cols];
         this.initializeGrid();
     }
 
     private void initializeGrid() {
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
-                this.grid[i][j] = new Cell(i, j);
+                this.gridArray[i][j] = new Cell(i, j);
             }
         }
     }
@@ -39,12 +39,12 @@ public class Grid {
         return this.cols;
     }
 
-    public Cell[][] getGrid() {
-        return this.grid;
+    public Cell[][] getGridArray() {
+        return this.gridArray;
     }
 
     public Cell getCell(int row, int col) {
-        return this.grid[row][col];
+        return this.gridArray[row][col];
     }
 
     // --- public functions ---
@@ -67,7 +67,7 @@ public class Grid {
                     System.out.print(" " + i + " ");
                 }
 
-                System.out.print("[ " + this.grid[i][j].getValueAsChar() + " ]");
+                System.out.print("[ " + this.gridArray[i][j].displayContent() + " ]");
             }
             System.out.println("\n");
         }

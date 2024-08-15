@@ -3,14 +3,14 @@ package minesweeper;
 public class Cell {
     private int x_cord;
     private int y_cord;
-    private int value;
+    private char content;
     private boolean isRevealed;
 
     // --- constructor ---
     public Cell(int x_cord, int y_cord) {
         this.x_cord = x_cord;
         this.y_cord = y_cord;
-        this.value = -2; // -2 represents an empty cell
+        this.content = ' ';
         this.isRevealed = false;
     }
 
@@ -23,26 +23,29 @@ public class Cell {
         return this.y_cord;
     }
 
-    public int getValue() {
-        return this.value;
+    public char getContent() {
+        return this.content;
     }
 
     public boolean getIsRevealed() {
         return this.isRevealed;
     }
 
-    public char getValueAsChar() {
+    public boolean isBomb() {
+        return false;
+    }
+
+    public char displayContent() {
         if (this.isRevealed == false) {
             return ' ';
         }
 
-        // turn int value into a char
-        return (char) (this.getValue() + '0');
+        return this.content;
     }
 
     // --- setter functions ---
-    public void setValue(int value) {
-        this.value = value;
+    public void setContent(char content) {
+        this.content = content;
     }
 
     public void setIsRevealedToTrue() {

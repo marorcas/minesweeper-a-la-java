@@ -26,7 +26,7 @@ public class Main {
                 continue;
             }
 
-            game.getCellValue(row, col);
+            game.revealCellContent(row, col);
         }
 
         scanner.close();
