@@ -26,10 +26,6 @@ public class MinesweeperGame {
     }
 
     // --- getter functions ---
-    private void getGameGrid() {
-        this.gameGrid.displayGrid();
-    }
-
     public boolean getGameEndStatus() {
         return this.gameEndStatus;
     }
@@ -109,7 +105,7 @@ public class MinesweeperGame {
         ;
     }
 
-    private void addBombsToGameGrid() {
+    private void displayBombs() {
         Arrays.stream(this.gameGrid.getGridArray())
                 .flatMap(Arrays::stream)
                 .filter(cell -> cell instanceof BombCell)
@@ -140,7 +136,7 @@ public class MinesweeperGame {
         System.out.println("   Have fun :)");
         System.out.println();
         System.out.println("Start playing!");
-        this.getGameGrid();
+        this.gameGrid.displayGrid();
     }
 
     public boolean checkCoordinateValidity(int number) {
@@ -158,8 +154,8 @@ public class MinesweeperGame {
             System.out.println("   ===============       BOOM!       ===============   ");
             System.out.println("Game over :(");
             this.setGameEndStatus();
-            this.addBombsToGameGrid();
-            this.getGameGrid();
+            this.displayBombs();
+            this.gameGrid.displayGrid();
             return;
         } else if (this.gameGrid.getCell(row, col).getIsRevealed()) {
             System.out.println(
@@ -173,7 +169,7 @@ public class MinesweeperGame {
                 System.out.println("   ===============      YOU WON!       ===============   ");
             }
 
-            this.getGameGrid();
+            this.gameGrid.displayGrid();
         }
     }
 }
